@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido</h1>
+    <p>Seleccione una opción:</p>
+    <button onclick="window.location.href='/visitante/encuestas'">Ver Encuestas Públicas</button>
+    <button onclick="window.location.href='/administrador/inicio'">Ingresar como Admin</button>
+    <button onclick="window.location.href='/registrados/inicio'">Ingresar como Usuario Registrado</button>
+    <button onclick="window.location.href='/visitante/crearUsuarioAdmin'">Crear usuario administrador</button> <!--ESTE BOTON TIENE QUE IR EN EL INICIO DE ADMINISTRADORES-->
+    <!--CREAR UN BOTON QUE DIGA "REGISTRARME" Y QUE SE REDIRIJA A VISITANTE Y QUE DE AHI A UN HTML Y CREE UN USUARIO CON EL ROL "USER" QUE SERIA UN USUARIO REGISTRADO -->
+</body>
+</html>
