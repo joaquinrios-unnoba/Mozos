@@ -6,32 +6,28 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-}
-
-body {
-    background-color: #0d0d0d;
-    color: white;
     font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 20px;
-    overflow-y: auto; /* Permite scroll si es necesario */
+    overflow-y: auto;
 }
 
 form {
-    background-color: #1a1a1a;
+    background-color: #ffffff;
     padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
-    box-sizing: border-box;
 }
 
 h1 {
     text-align: center;
-    color: #00ff00;
+    color: #001101;
     margin-bottom: 20px;
     font-size: 1.8em;
 }
@@ -39,7 +35,7 @@ h1 {
 label {
     display: block;
     margin-top: 15px;
-    color: #00ff00;
+    color: #333;
     font-size: 0.95em;
 }
 
@@ -48,19 +44,26 @@ input[type="password"] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
-    background-color: #333;
-    border: 1px solid #00ff00;
-    color: white;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    color: #333;
     border-radius: 5px;
     font-size: 1em;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #4CAF50;
+    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
 }
 
 button {
     width: 100%;
     padding: 12px;
     margin-top: 20px;
-    background-color: #00ff00;
-    color: black;
+    background-color: #4CAF50;
+    color: white;
     border: none;
     border-radius: 5px;
     font-weight: bold;
@@ -69,7 +72,7 @@ button {
 }
 
 button:hover {
-    background-color: #00cc00;
+    background-color: #45a049;
 }
 
 p[th\:if] {
@@ -79,7 +82,7 @@ p[th\:if] {
     font-size: 0.9em;
 }
 
-/* 📱 Responsive para pantallas pequeñas */
+/* Responsive para celulares */
 @media (max-width: 480px) {
     form {
         padding: 20px;
