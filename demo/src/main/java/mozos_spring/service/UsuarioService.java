@@ -1,7 +1,6 @@
 package mozos_spring.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,8 +14,9 @@ public interface UsuarioService extends UserDetailsService{
     List<Usuario> getAll();
     void save(Usuario usuario);
     void delete(Long id);
-    Optional<Usuario> findByEmail(String email);
+    Usuario findByEmail(String email);
     Usuario findByUsername(String username);
+    public void actualizarUsuario(Usuario usuarioActualizado); 
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException; 
 

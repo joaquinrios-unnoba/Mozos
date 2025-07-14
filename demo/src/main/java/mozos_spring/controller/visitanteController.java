@@ -3,9 +3,9 @@ package mozos_spring.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import mozos_spring.model.Usuario;
 import mozos_spring.service.UsuarioService;
@@ -26,24 +26,15 @@ public class visitanteController {
         return "visitante/encuestasVisitante";
     }
 
-    @GetMapping("/crearUsuarioAdmin")
-    public String crearUsuarioAdmin(){
+    @GetMapping("/crearUsuarioResgistrado")
+    public String crearUsuarioAdmin(){          //ACOMODAR ESTO PARA CREAR USUARIOS REGISTRADOS
         return "administrador/crearUsuarioAdmin";
     }
 
-    @PostMapping("/crearUsuarioAdmin")
-    public String crearUsuarioAdmin(@RequestParam String username, 
-                                @RequestParam String email, 
-                                @RequestParam String contrasenia) {
-        Usuario usuario = new Usuario();
-        usuario.setUsername(username);
-        usuario.setEmail(email);
-        usuario.setContrasenia(contrasenia);
-        usuario.setRol(Usuario.Rol.ADMIN);
-
-        // Guardar el usuario en la base de datos (suponiendo que tienes un repositorio de usuarios)
+    @PostMapping("/crearUsuarioRegistrado")
+    public String crearUsuarioAdmin(@ModelAttribute Usuario usuario) {
+        usuario.setRol(Usuario.Rol.USER);
         usuarioService.save(usuario);
-
         return "autenticaciones/pagInicial"; //return "administrador/inicio"; // Redirigir a una página de éxito o lista de usuarios
     }
 
