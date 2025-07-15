@@ -5,6 +5,7 @@ import mozos_spring.model.Usuario;
 import mozos_spring.repository.UsuarioRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -37,6 +38,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public List<Usuario> getAll() {         //Obtenemos TODOS los usuarios
         return usuarioRepository.findAll();
+    }
+
+    @Override
+    public List<Usuario> listarAdmins(){    //Obtienes TODOS los usuarios ADMINS
+        return usuarioRepository.findByRol(Usuario.Rol.ADMIN);
     }
 
     @Override
@@ -95,13 +101,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
-    public Usuario findByEmail(String email) {          //Busca un usuario por su mail
-    return usuarioRepository.findByUsername(email).orElse(null);
-}
+    public Optional<Usuario> findByEmail(String email) {          //Busca un usuario por su mail
+        return usuarioRepository.findByEmail(email);
+    }
 
     @Override
-    public Usuario findByUsername(String username) {   //Busca un usuario pir su nombre
-    return usuarioRepository.findByUsername(username).orElse(null);
+    public Optional<Usuario> findByUsername(String username) {   //Busca un usuario pir su nombre
+    return usuarioRepository.findByUsername(username);
 }
 
 }

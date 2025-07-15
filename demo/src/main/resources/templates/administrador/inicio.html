@@ -1,41 +1,144 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicio Administrador</title>
-    <link rel="stylesheet" th:href="@{/css/inicioAdmin.css}">
-    <link rel="stylesheet" th:href="@{/css/base.css}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio Administrador</title>
+  <link rel="stylesheet" th:href="@{/css/inicioAdmin.css}">
+  <link rel="stylesheet" th:href="@{/css/base.css}">
+  <style>
+    /* Overlay que cubre el resto de la pantalla */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.3);
+      display: none;
+      z-index: 998;
+    }
+
+    .overlay.active {
+      display: block;
+    }
+
+    .side-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 400px;
+      height: 100%;
+      background-color: #f5f5f5;
+      box-shadow: -2px 0 5px rgba(0,0,0,0.2);
+      overflow-y: auto;
+      transition: right 0.4s ease;
+      padding: 20px;
+      z-index: 999;
+    }
+
+    .side-panel.open {
+      right: 0;
+    }
+
+    .admin-card {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .admin-card h4 {
+      margin: 0;
+    }
+
+    .btn {
+      border: none;
+      padding: 6px 10px;
+      margin: 5px 3px 0 0;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9em;
+    }
+
+    .btn-eliminar { background-color: #e74c3c; }
+    .btn-modificar { background-color: #3498db; }
+    .btn-info { background-color: #2ecc71; }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Panel de Administración</h1>
-    </header>
-    <nav>
-        <a href="#usuarios">Gestión de Usuarios</a>
-        <a href="#configuracion">Configuración</a>
-        <a href="#reportes">Reportes</a>
-        <a href="#cerrar-sesion">Cerrar Sesión</a>
-    </nav>
-    <main>
-        <section id="usuarios">
-            <h2>Gestión de Usuarios</h2>
-            <p>Agregar, editar o eliminar usuarios.</p>
-        </section>
-        <section id="configuracion">
-            <h2>Configuración</h2>
-            <p>Actualizar configuraciones generales del sistema.</p>
-        </section>
-        <section id="reportes">
-            <h2>Reportes</h2>
-            <p>Ver reportes y estadísticas del sistema.</p>
-        </section>
-    </main>
-    
-    <button onclick="window.location.href='/administrador/crearUsuarioAdmin'">Crear usuario administrador</button> <!--ESTE BOTON TIENE QUE IR EN EL INICIO DE ADMINISTRADORES-->
-    
-    <footer>
-        © 2025 Panel de Administración
-    </footer>
+  <header>
+    <h1>Panel de Administración</h1>
+  </header>
+
+  <nav>
+    <a href="#" onclick="togglePanel()">Gestión de Usuarios</a>
+    <a href="#configuracion">Configuración</a>
+    <a href="#reportes">Reportes</a>
+    <a href="#cerrar-sesion">Cerrar Sesión</a>
+  </nav>
+
+  <main>
+    <section id="configuracion">
+      <h2>Configuración</h2>
+      <p>Actualizar configuraciones generales del sistema.</p>
+    </section>
+    <section id="reportes">
+      <h2>Reportes</h2>
+      <p>Ver reportes y estadísticas del sistema.</p>
+    </section>
+  </main>
+
+  <button onclick="window.location.href='/administrador/crearUsuarioAdmin'">
+    Crear usuario administrador
+  </button>
+
+  <!-- Overlay -->
+  <div id="overlay" class="overlay" onclick="closePanel()"></div>
+
+  <!-- PANEL LATERAL -->
+  <div id="panelUsuarios" class="side-panel">
+    <h3>Usuarios Administradores</h3>
+    <div th:each="admin : ${usuariosAdmins}" class="admin-card">
+      <h4 th:text="${admin.username}">Nombre</h4>
+      <p th:text="${admin.email}">correo@ejemplo.com</p>
+      <button class="btn btn-eliminar"
+              th:onclick="'window.location.href=\'/administrador/eliminarUsuarioAdmin?id=' + ${admin.id} + '\';'">
+        Eliminar
+      </button>
+      <button class="btn btn-modificar"
+              th:onclick="'window.location.href=\'/administrador/modificarUsuarioAdmin/' + ${admin.id} + '\';'">
+        Modificar
+      </button>
+      <button class="btn btn-info"
+              th:onclick="'window.location.href=\'/administrador/verUsuarioAdmin?id=' + ${admin.id} + '\';'">
+        Ver info
+      </button>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Panel de Administración
+  </footer>
+
+  <script>
+    function togglePanel() {
+      const panel = document.getElementById("panelUsuarios");
+      const overlay = document.getElementById("overlay");
+
+      panel.classList.add("open");
+      overlay.classList.add("active");
+    }
+
+    function closePanel() {
+      const panel = document.getElementById("panelUsuarios");
+      const overlay = document.getElementById("overlay");
+
+      panel.classList.remove("open");
+      overlay.classList.remove("active");
+    }
+  </script>
 </body>
 </html>

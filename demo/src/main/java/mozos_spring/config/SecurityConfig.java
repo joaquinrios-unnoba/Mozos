@@ -15,7 +15,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(auth -> auth 
-                .requestMatchers("/login", "/inicio", "/", "/visitante/**", "/css/**").permitAll() // Público
+                .requestMatchers("/login", "/inicio", "/", "/visitante/**", "/css/**","/administrador/crearUsuarioAdmin").permitAll() // Público
                 .requestMatchers("/administrador/**").hasRole("ADMIN") // Solo admin
                 .requestMatchers("/registrados/**").hasAnyRole("USER", "ADMIN") // Usuario registrado o admin
                 .anyRequest().authenticated() // Otras rutas necesitan autenticación

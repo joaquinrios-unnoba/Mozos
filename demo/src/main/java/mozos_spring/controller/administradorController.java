@@ -1,5 +1,7 @@
 package mozos_spring.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,8 +9,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
+
 import mozos_spring.model.Usuario;
 import mozos_spring.service.UsuarioService;
 
@@ -23,8 +27,10 @@ public class administradorController {
         this.usuarioService = usuarioService;
     }
 
-    @GetMapping("/inicio")
-    public String inicio(){
+    @GetMapping("/inicio")                  //Cada vez que voy al inicio de admins me traigo la info de todos los admins
+    public String inicio(Model model){
+        List<Usuario> admins = usuarioService.listarAdmins();
+        model.addAttribute("usuariosAdmins", admins);
         return "administrador/inicio";
     }
 
@@ -34,9 +40,21 @@ public class administradorController {
     }
     //Decidir si usar DTOs, si lo hago presta atencion a como implementas su constructor
     @PostMapping("/crearUsuarioAdmin")                  //Crear usuario
-    public String crearUsuarioAdmin(@ModelAttribute Usuario usuario){
-        usuario.setRol(Usuario.Rol.ADMIN);
-        usuarioService.save(usuario);
+    public String crearUsuarioAdmin(@RequestParam String username, //@ModelAttribute Usuario usuario, Model model){
+                                    @RequestParam String email,
+                                    @RequestParam String contrasenia,
+                                    Model model){        
+        Usuario user = new Usuario();
+        user.setUsername(username);
+        user.setEmail(email);
+        user.setContrasenia(contrasenia);
+        user.setRol(Usuario.Rol.ADMIN);
+        try {
+            usuarioService.save(user);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());   
+            return "administrador/crearUsuarioAdmin";   //Si ocurre un error notifico y me quedo en la misma pagina
+        }
         return "administrador/inicio"; // Redirigir a una página de éxito o lista de usuarios
     }
 
